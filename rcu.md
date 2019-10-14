@@ -7,21 +7,22 @@
 
 
 ### 内核api
-1. 读 ``
+1. 读 
+```
   rcu_read_lock 
   rcu_derefrence // 内存屏障，编译器不会优化
   rcu_read_unlock
 
 
 ```
-// 2 写
+
+2. 写
+```
   rcu_assign_pointer(p,v) // 内存屏障，防止编译器优化 
   synchronize_rcu or call_rcu
 
-
-
 ```
-```
+
 
 ### rcu 宽限期
 
@@ -42,8 +43,6 @@
 
 那麽，写者是否也可以采用引用计数呢？ 答案是可以的。
 
-`
-```
 
 ```
 struct foo{
@@ -74,7 +73,7 @@ void foo_update(foo * new_fp)
     gbl_foo = new_fp;
     spin_unlock(&foo_mutex);
 }
-``
+```
 
 加锁后代码：
 ```
@@ -102,5 +101,3 @@ void foo_update(foo *new_fp)
 kernel 提供了一种 效率比较高的锁 rcu 来保证多个读者写者互斥访问
 临界资源。
 
-
-`
